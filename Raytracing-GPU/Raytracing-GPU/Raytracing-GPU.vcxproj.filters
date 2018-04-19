@@ -18,9 +18,6 @@
     <ClInclude Include="camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="hitable.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="material.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -40,8 +37,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="raytracing.cu">
-      <Filter>源文件</Filter>
-    </None>
+    <CudaCompile Include="raytracing.cu" />
   </ItemGroup>
 </Project>

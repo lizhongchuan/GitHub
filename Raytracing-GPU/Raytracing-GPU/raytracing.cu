@@ -61,13 +61,15 @@ struct hit_recordCuda
 
 };
 
-__device__ float d_schlick(float cosine, float ref_idx) {
+__device__ float d_schlick(float cosine, float ref_idx) 
+{
 	float r0 = (1.0f - ref_idx) / (1.0f + ref_idx);
 	r0 = r0*r0;
 	return r0 + (1.0f - r0)*powf((1.0f - cosine), 5);
 }
 
-__device__ bool d_refract(const float3& v, const float3& n, float ni_over_nt, float3& refracted) {
+__device__ bool d_refract(const float3& v, const float3& n, float ni_over_nt, float3& refracted) 
+{
 	float3 uv = normalize(v);
 	float dt = dot(uv, n);
 	float discriminant = 1.0 - ni_over_nt*ni_over_nt*(1 - dt*dt);
@@ -79,7 +81,8 @@ __device__ bool d_refract(const float3& v, const float3& n, float ni_over_nt, fl
 		return false;
 }
 
-__device__ float3 d_reflect(const float3& v, const float3& n) {
+__device__ float3 d_reflect(const float3& v, const float3& n) 
+{
 	return v - 2 * dot(v, n)*n;
 }
 
@@ -104,7 +107,8 @@ __device__ float3 d_random_in_unit_disk(unsigned long long seed)
 	return p;
 }
 
-__device__ float3 d_random_in_unit_sphere(unsigned long long seed) {
+__device__ float3 d_random_in_unit_sphere(unsigned long long seed) 
+{
 	float3 p;
 	float3 one3 = { 1.0f, 1.0f, 1.0f };
 	//do {
@@ -249,7 +253,7 @@ __device__ float3 d_color(Ray &r_in, sphereCuda* pSphereList, int& depth, bool& 
 		if (depth < 50 && bscatter) 
 		{
 			bContinue = true;
-			return attenuation;// *d_color(scattered, pSphereList, depth + 1);
+			return attenuation;
 		}
 		else 
 		{
@@ -308,21 +312,10 @@ __global__ void d_ray_tracing(uchar *d_output, sphereCuda* pSphereList, uint nx,
 			rt *= d_color(r, pSphereList, depth, bCont);
 		}
 
-		col += rt;//d_color(r, pSphereList, 0);
+		col += rt;
 	}
 	col /= float(ns);
 	col = { sqrtf(col.x), sqrtf(col.y), sqrtf(col.z) };
-
-	// test
-	//col = normalize(r.o);
-
-	//curandState devStates;
-	//curand_init(y * nx + x, 0, 0, &devStates);
-	//float RANDOM = curand_uniform(&devStates);// +0.2;
-
-	//uchar ir = uchar(255.99*RANDOM);
-	//uchar ig = uchar(255.99*RANDOM);
-	//uchar ib = uchar(255.99*RANDOM);
 
 	uchar ir = uchar(255.99*col.x);
 	uchar ig = uchar(255.99*col.y);

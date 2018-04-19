@@ -1,0 +1,14 @@
+
+Raytracing-GPU/.vs/Raytracing-GPU/v14/.suo
+Raytracing-GPU/Raytracing-GPU.VC.db
+Raytracing-GPU/Raytracing-GPU.VC.VC.opendb
+Raytracing-GPU/Raytracing-GPU/vc140.pdb
+*.obj
+*.log
+*.tlog
+*.cache
+*.deps
+*.pdb
+*.exe
+*.iobj
+*.ipdb
